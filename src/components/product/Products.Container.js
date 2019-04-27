@@ -48,7 +48,8 @@ const ProductsPage = props => {
               columns: [
                 {
                   Header: "ID",
-                  accessor: "id"
+                  accessor: "id",
+                  sortMethod: (a, b) => Number(a) > Number(b) ? 1 : -1
                 },
                 {
                   Header: "Product",
