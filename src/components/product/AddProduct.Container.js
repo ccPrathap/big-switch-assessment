@@ -37,10 +37,10 @@ class AddProductPage extends Component {
       id: "",
       product: "",
       brand: "",
-      category: categories[0],
+      category: categoriesList[0],
       price: "",
       inStock: false,
-      rating: ratings[0]
+      rating: ratingsList[0]
     },
     errors: {
       id: "",
