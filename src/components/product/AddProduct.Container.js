@@ -29,7 +29,10 @@ const ratings = getDropDownOptions(ratingsList);
 const categories = getDropDownOptions(categoriesList);
 
 const priceFormat = /^\d+\.\d{3,}$/;
+const VALID_NUMBER = "Should be a valid number.";
 const MAX_50_CHARS = "Max 50 characters are allowed.";
+const GRETER_THAN_ZERO = "Should be greater than zero.";
+const ONLY_TWO_DECIMALS = "Upto two decimals are allowed.";
 
 class AddProductPage extends Component {
   state = {
@@ -55,7 +58,9 @@ class AddProductPage extends Component {
     const errors = Object.assign({}, this.state.errors);
     switch (field) {
       case "id":
-        if (isNaN(Number(value))) errors.id = "ID Should be number.";
+        if (isNaN(Number(value))) errors.id = VALID_NUMBER;
+        else if (value && value.trim() && Number(value) <= 0)
+          errors.id = GRETER_THAN_ZERO;
         else errors.id = "";
         break;
       case "product":
@@ -67,8 +72,10 @@ class AddProductPage extends Component {
         else errors.brand = "";
         break;
       case "price":
-        if (isNaN(Number(value))) errors.price = "Price Should be number.";
-        else if (priceFormat.test(Number(value))) errors.price = "Upto two decimals are allowed.";
+        if (isNaN(Number(value))) errors.price = VALID_NUMBER;
+        else if (value && value.trim() && Number(value) <= 0) 
+          errors.price = GRETER_THAN_ZERO;
+        else if (priceFormat.test(Number(value))) errors.price = ONLY_TWO_DECIMALS;
         else errors.price = "";
         break;
       default:
