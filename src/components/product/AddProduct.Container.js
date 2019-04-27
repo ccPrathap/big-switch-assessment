@@ -20,19 +20,17 @@ const categoriesList = [
   "Smart Home Devices",
   "Video Games"
 ];
-const ratingsList = [1, 2, 3, 4, 5];
-const getDropDownOptions = items => items.map(item => ({
+const categories = categoriesList.map(item => ({
   text: item,
   value: item
 }));
-const ratings = getDropDownOptions(ratingsList);
-const categories = getDropDownOptions(categoriesList);
 
 const priceFormat = /^\d+\.\d{3,}$/;
 const VALID_NUMBER = "Should be a valid number.";
 const MAX_50_CHARS = "Max 50 characters are allowed.";
 const GRETER_THAN_ZERO = "Should be greater than zero.";
 const ONLY_TWO_DECIMALS = "Upto two decimals are allowed.";
+const INBETWEEN_ONE_TO_FIVE = "Should be between 1(lowest) to 5(highest)."
 
 class AddProductPage extends Component {
   state = {
@@ -43,13 +41,14 @@ class AddProductPage extends Component {
       category: categoriesList[0],
       price: "",
       inStock: false,
-      rating: ratingsList[0]
+      rating: ""
     },
     errors: {
       id: "",
       product: "",
       brand: "",
-      price: ""
+      price: "",
+      rating: "",
     },
     saving: false
   };
@@ -77,6 +76,12 @@ class AddProductPage extends Component {
           errors.price = GRETER_THAN_ZERO;
         else if (priceFormat.test(Number(value))) errors.price = ONLY_TWO_DECIMALS;
         else errors.price = "";
+        break;
+      case "rating":
+        if (isNaN(Number(value))) errors.rating = VALID_NUMBER;
+        else if (value && value.trim() && (Number(value) < 1 || Number(value) > 5))
+          errors.rating = INBETWEEN_ONE_TO_FIVE;
+        else errors.rating = "";
         break;
       default:
         break;
@@ -139,15 +144,16 @@ class AddProductPage extends Component {
 
   render() {
     return (
-        <ProductForm 
+      <div style={{paddingBottom: "20px"}}>
+        <ProductForm
           allCategories={categories}
-          ratings={ratings}
           productInfo={this.state.product}
           errors={this.state.errors}
           onChange={this.updateProductState}
           onSave={this.saveProduct}
           saving={this.state.saving}
         />
+      </div>
     );
   }
 }

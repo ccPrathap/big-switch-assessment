@@ -6,7 +6,6 @@ import SelectInput from "../common/SelectInput";
 const ProductForm = ({
   productInfo,
   allCategories,
-  ratings,
   onSave,
   onChange,
   saving,
@@ -67,12 +66,12 @@ const ProductForm = ({
         ]}
         onChange={onChange}
       />
-      <SelectInput
+      <TextInput
         name="rating"
         label="Rating"
-        value={String(productInfo.rating)}
-        options={ratings}
+        value={productInfo.rating}
         onChange={onChange}
+        error={errors.rating}
       />
       <input
         type="submit"
@@ -88,7 +87,6 @@ const ProductForm = ({
 ProductForm.propTypes = {
   productInfo: PropTypes.object.isRequired,
   allCategories: PropTypes.array.isRequired,
-  ratings: PropTypes.array.isRequired,
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   saving: PropTypes.bool,
