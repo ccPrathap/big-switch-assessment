@@ -21,6 +21,7 @@ const categories = [
   "Video Games"
 ];
 const ratings = [1, 2, 3, 4, 5];
+const priceFormat = /^\d+\.\d{3,}$/;
 
 class AddProductPage extends Component {
   state = {
@@ -65,6 +66,7 @@ class AddProductPage extends Component {
         });
       case "price":
         if (isNaN(Number(value))) errors.price = "Price Should be number/double.";
+        else if (priceFormat.test(Number(value))) errors.price = "Upto two decimals are allowed.";
         else errors.price = "";
         return this.setState({
           errors
@@ -99,7 +101,7 @@ class AddProductPage extends Component {
       brand,
       price
     } = this.state.product;
-    if (!(id.trim() || product.trim() || brand.trim() || price.trim()))
+    if (!(id.trim() && (product.trim() && brand.trim() && price.trim())))
       return toastr.error("All fields are mandatory!");
     else {
       this.setState({
