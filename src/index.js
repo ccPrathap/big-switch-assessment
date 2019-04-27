@@ -1,19 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router
-} from 'react-router-dom';
+} from "react-router-dom";
 import {
   Provider
-} from 'react-redux';
+} from "react-redux";
 import {
   loadProducts
-} from './actions/productActions';
-import routes from './routes';
-import App from './components/App';
-import * as serviceWorker from './serviceWorker';
-import configureStore from './store/configureStore';
-import '../node_modules/toastr/build/toastr.min.css';
+} from "./actions/productActions";
+import routes from "./routes";
+import App from "./components/App";
+import * as serviceWorker from "./serviceWorker";
+import configureStore from "./store/configureStore";
+
+import "./assets/styles.css";
+
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/toastr/build/toastr.css";
 
 const store = configureStore();
 
@@ -25,7 +29,7 @@ ReactDOM.render(
       <App>{routes}</App>
     </Router>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

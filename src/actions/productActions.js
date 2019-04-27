@@ -1,5 +1,5 @@
-import * as types from './actionTypes';
-import productApi from '../api/mockProductApi';
+import * as types from "./actionTypes";
+import productApi from "../api/mockProductApi";
 
 export const loadProductsSuccess = products => ({
   type: types.LOAD_PRODUCTS_SUCCESS,
@@ -24,8 +24,8 @@ export const loadProducts = () => dispatch =>
   });
 
 export const saveProduct = product => dispatch =>
-  productApi.saveProduct(product).then(product => {
-    dispatch(createProductSuccess(product));
+  productApi.saveProduct(product).then(productSuccess => {
+    dispatch(createProductSuccess(productSuccess));
   }).catch(error => {
     throw (error);
   });

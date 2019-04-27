@@ -1,7 +1,11 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-const App = props => <Fragment>{props.children}</Fragment>;
+const App = props => (
+  <div className="container-fluid">
+    {props.children}
+  </div>
+);
 
 App.prototypes = {
   children: PropTypes.object.isRequired
