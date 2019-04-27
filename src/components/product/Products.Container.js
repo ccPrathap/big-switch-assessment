@@ -11,7 +11,6 @@ import {
   bindActionCreators
 } from "redux";
 import toastr from "toastr";
-// import ProductList from "./ProductList";
 import * as productActions from "../../actions/productActions";
 
 const ProductsPage = props => {
@@ -66,7 +65,7 @@ const ProductsPage = props => {
                 {
                   Header: "Price",
                   accessor: "price",
-                  Cell: ({ value }) => `$${value ? value : ''}`
+                  Cell: ({ value }) => value ? `$${value}` : ""
                 },
                 {
                   Header: "In Stock",

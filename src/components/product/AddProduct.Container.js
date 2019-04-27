@@ -12,7 +12,7 @@ import toastr from "toastr";
 import ProductForm from "./ProductForm";
 import * as productActions from "../../actions/productActions";
 
-const categories = [
+const categoriesList = [
   "Computers",
   "TVs",
   "Phones",
@@ -20,8 +20,16 @@ const categories = [
   "Smart Home Devices",
   "Video Games"
 ];
-const ratings = [1, 2, 3, 4, 5];
+const ratingsList = [1, 2, 3, 4, 5];
+const getDropDownOptions = items => items.map(item => ({
+  text: item,
+  value: item
+}));
+const ratings = getDropDownOptions(ratingsList);
+const categories = getDropDownOptions(categoriesList);
+
 const priceFormat = /^\d+\.\d{3,}$/;
+const MAX_50_CHARS = "Max 50 characters are allowed.";
 
 class AddProductPage extends Component {
   state = {
@@ -47,35 +55,29 @@ class AddProductPage extends Component {
     const errors = Object.assign({}, this.state.errors);
     switch (field) {
       case "id":
-        if (isNaN(parseInt(value))) errors.id = "Id Should be number.";
+        if (isNaN(Number(value))) errors.id = "ID Should be number.";
         else errors.id = "";
-        return this.setState({
-          errors
-        });
+        break;
       case "product":
-        if (value.length > 50) errors.product = "Max 50 characters are allowed.";
+        if (value.length > 50) errors.product = MAX_50_CHARS;
         else errors.product = "";
-        return this.setState({
-          errors
-        });
+        break;
       case "brand":
-        if (value.length > 50) errors.brand = "Max 50 characters are allowed.";
+        if (value.length > 50) errors.brand = MAX_50_CHARS;
         else errors.brand = "";
-        return this.setState({
-          errors
-        });
+        break;
       case "price":
-        if (isNaN(Number(value))) errors.price = "Price Should be number/double.";
+        if (isNaN(Number(value))) errors.price = "Price Should be number.";
         else if (priceFormat.test(Number(value))) errors.price = "Upto two decimals are allowed.";
         else errors.price = "";
-        return this.setState({
-          errors
-        });
+        break;
       default:
-        return this.setState({
-          errors
-        });
+        break;
     }
+
+    return this.setState({
+      errors
+    });
   };
 
   updateProductState = event => {
@@ -89,6 +91,7 @@ class AddProductPage extends Component {
       value = event.target.value;
     }
     product[field] = value;
+
     this.validateInput(field, value);
     return this.setState({product: product});
   };
@@ -101,9 +104,10 @@ class AddProductPage extends Component {
       brand,
       price
     } = this.state.product;
-    if (!(id.trim() && (product.trim() && brand.trim() && price.trim())))
+
+    if (!(id.trim() && (product.trim() && brand.trim() && price.trim()))) {
       return toastr.error("All fields are mandatory!");
-    else {
+    } else {
       this.setState({
         saving: true
       });
@@ -119,7 +123,9 @@ class AddProductPage extends Component {
   };
 
   redirect = () => {
-    this.setState({saving: true});
+    this.setState({
+      saving: true
+    });
     toastr.success("Product saved.");
     this.props.history.push("/");
   };
@@ -127,19 +133,14 @@ class AddProductPage extends Component {
   render() {
     return (
         <ProductForm 
-          allCategories={categories.map(item => ({
-            text: item,
-            value: item
-          }))}
-          ratings={ratings.map(item => ({
-            text: item,
-            value: item
-          }))}
+          allCategories={categories}
+          ratings={ratings}
           productInfo={this.state.product}
           errors={this.state.errors}
           onChange={this.updateProductState}
           onSave={this.saveProduct}
-          saving={this.state.saving} />
+          saving={this.state.saving}
+        />
     );
   }
 }

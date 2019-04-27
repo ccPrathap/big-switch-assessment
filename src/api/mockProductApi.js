@@ -48,10 +48,8 @@ class ProductApi {
       const productIds = products.map(item => item.id);
       setTimeout(() => {
         // Just simulating creation here.
-        // The server would generate ids and watchHref's for new products in a real app.
-        // Cloning so copy returned is passed by value rather than by reference.
         if (productIds.includes(parseInt(product.id)))
-          reject("ID Alredy exists!");
+          reject("ID alredy exists!");
         products.push(product);
         resolve(product);
       });

@@ -15,7 +15,7 @@ const ProductForm = ({
   const hasError = Object.values(errors).filter(item => Boolean(item)).length > 0;
   return (
     <form>
-      <h1>Add Product</h1>
+      <h2>Add Product</h2>
       <TextInput
         name="id"
         label="ID"
